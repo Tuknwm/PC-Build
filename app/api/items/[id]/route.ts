@@ -1,8 +1,8 @@
 import { prisma } from "@/scripts/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   const id = params.id;
@@ -27,7 +27,7 @@ export async function GET(
 }
 
 export async function PUT(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   const data = await request.json();
@@ -39,7 +39,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   await prisma.item.delete({
