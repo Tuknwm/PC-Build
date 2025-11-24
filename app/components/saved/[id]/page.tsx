@@ -52,18 +52,6 @@ export default function BuildDetail() {
       <h2>Detail Build</h2>
 
       <form onSubmit={handleUpdate}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Build Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
         <ul className="list-group">
           <li className="list-group-item">CPU: {build.cpu}</li>
           <li className="list-group-item">GPU: {build.gpu}</li>
@@ -82,13 +70,9 @@ export default function BuildDetail() {
             <b>PSU Rekomendasi:</b> {build.recommendedPSU}W
           </p>
         </div>
-
-        <button type="submit" className="btn btn-primary mt-3">
-          Update Build
-        </button>
         <button
           type="button"
-          className="btn btn-secondary mt-3 ms-2"
+          className="btn btn-dark ms-2"
           onClick={() => router.push("/components/saved")}
         >
           Kembali

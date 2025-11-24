@@ -27,7 +27,7 @@ export default function SavedBuilds() {
               <div className="d-flex gap-2 mt-2">
                 <Link
                   href={`/components/saved/${b.id}`}
-                  className="btn btn-dark flex-fill"
+                  className="btn btn-outline-dark flex-fill"
                 >
                   Detail
                 </Link>
@@ -43,6 +43,10 @@ export default function SavedBuilds() {
           </div>
         ))}
       </div>
+
+      <Link href="/" className="btn btn-dark mt-3">
+        Kembali
+      </Link>
     </div>
   );
 }
