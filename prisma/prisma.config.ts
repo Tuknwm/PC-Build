@@ -6,4 +6,8 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   engine: "classic",
+  datasource: {
+    provider: "sqlite",
+    url: "file:./dev.db",
+  },
 });
