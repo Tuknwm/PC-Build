@@ -3,9 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  context: { params: { id: string } },
 ) {
-  const id = params.id;
+  const id = context.params.id;
   console.log("Fetching item with id:", id);
   try {
     const item = await prisma.item.findUnique({
@@ -28,11 +28,11 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  context: { params: { id: string } },
 ) {
   const data = await request.json();
   const updatedItem = await prisma.item.update({
-    where: { id: params.id },
+    where: { id: context.params.id },
     data,
   });
   return NextResponse.json(updatedItem);
@@ -40,10 +40,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  context: { params: { id: string } },
 ) {
   await prisma.item.delete({
-    where: { id: params.id },
+    where: { id: context.params.id },
   });
   return new Response(null, { status: 204 });
 }
