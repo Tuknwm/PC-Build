@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="container min-vh-100 d-flex align-items-center justify-content-center">
@@ -23,15 +25,15 @@ export default function Home() {
         </div>
 
         <div className="mt-4 d-flex gap-3 justify-content-center flex-wrap">
-          <a href="/components" className="btn btn-outline-dark">
+          <Link href="/components" className="btn btn-outline-dark">
             Mulai Rakit PC
-          </a>
-          <a href="/components/saved" className="btn btn-outline-dark">
+          </Link>
+          <Link href="/components/saved" className="btn btn-outline-dark">
             Lihat Build Tersimpan
-          </a>
-          <a href="/games" className="btn btn-outline-dark">
+          </Link>
+          <Link href="/games" className="btn btn-outline-dark">
             Lihat Api games
-          </a>
+          </Link>
         </div>
       </div>
     </div>

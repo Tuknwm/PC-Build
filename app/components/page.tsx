@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { usePCBuilder } from "@/scripts/hitung-ps";
 
 const parts = {
@@ -90,6 +91,16 @@ const parts = {
   ],
 };
 
+interface Part {
+  name: string;
+  watt: number;
+}
+
+interface CalculationResult {
+  totalWatt: number;
+  recommendedPSU: number;
+}
+
 export default function ComponentPicker() {
   const [cpu, setCPU] = useState("");
   const [gpu, setGPU] = useState("");
@@ -99,7 +110,7 @@ export default function ComponentPicker() {
   const [casing, setCasing] = useState("");
   const [cooler, setCooler] = useState("");
 
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<CalculationResult | null>(null);
 
   function calculatePSU() {
     const total =
@@ -122,6 +133,7 @@ export default function ComponentPicker() {
   const { saveBuild } = usePCBuilder();
 
   function handleSave() {
+    if (!result) return;
     const build = {
       cpu,
       gpu,
@@ -138,6 +150,21 @@ export default function ComponentPicker() {
     alert("Build berhasil disimpan!");
   }
 
+  const componentSelectors: [
+    string,
+    string,
+    React.Dispatch<React.SetStateAction<string>>,
+    Part[],
+  ][] = [
+    ["CPU", cpu, setCPU, parts.cpu],
+    ["GPU", gpu, setGPU, parts.gpu],
+    ["RAM", ram, setRAM, parts.ram],
+    ["Motherboard", motherboard, setMotherboard, parts.motherboard],
+    ["SSD", ssd, setSSD, parts.ssd],
+    ["Casing", casing, setCasing, parts.casing],
+    ["Cooler", cooler, setCooler, parts.cooler],
+  ];
+
   return (
     <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
@@ -146,24 +173,16 @@ export default function ComponentPicker() {
             <div className="card-body p-4">
               <h2 className="card-title mb-4">Pilih Komponen PC</h2>
 
-              {[
-                ["CPU", cpu, setCPU, parts.cpu],
-                ["GPU", gpu, setGPU, parts.gpu],
-                ["RAM", ram, setRAM, parts.ram],
-                ["Motherboard", motherboard, setMotherboard, parts.motherboard],
-                ["SSD", ssd, setSSD, parts.ssd],
-                ["Casing", casing, setCasing, parts.casing],
-                ["Cooler", cooler, setCooler, parts.cooler],
-              ].map(([label, value, setValue, list]) => (
-                <div className="mb-3" key={label as string}>
+              {componentSelectors.map(([label, value, setValue, list]) => (
+                <div className="mb-3" key={label}>
                   <label className="form-label fw-semibold">{label}</label>
                   <select
                     className="form-select"
-                    value={value as string}
-                    onChange={(e) => (setValue as any)(e.target.value)}
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
                   >
                     <option value="">-- pilih {label} --</option>
-                    {(list as any).map((p: any) => (
+                    {list.map((p) => (
                       <option key={p.name} value={p.name}>
                         {p.name} ({p.watt}W)
                       </option>
@@ -198,9 +217,9 @@ export default function ComponentPicker() {
               </button>
             )}
 
-            <a href="/" className="btn btn-dark">
+            <Link href="/" className="btn btn-dark">
               Kembali
-            </a>
+            </Link>
           </div>
         </div>
       </div>

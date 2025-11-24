@@ -3,10 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   request: Request,
-  context: { params: { id: string } },
+  { params }: { params: { id: string } },
 ) {
-  const url = new URL(request.url);
-  const id = url.pathname.split("/").pop();
+  const id = params.id;
   console.log("Fetching item with id:", id);
   try {
     const item = await prisma.item.findUnique({
